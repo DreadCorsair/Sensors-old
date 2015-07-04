@@ -4,10 +4,10 @@ import java.util.List;
 
 public class SensorHandler
 {
-    private Hashtable<String,Integer> _sensors;
-    private List<long[]> _times;
-    private List<double[]> _values;
-    private int _sensorAmount;
+    private Hashtable<String,Integer> sensors;
+    private List<long[]> times;
+    private List<double[]> values;
+    private int sensorAmount;
 
     SensorHandler()
     {
@@ -16,50 +16,48 @@ public class SensorHandler
 
     public void Clear()
     {
-        this._sensors = new Hashtable<>();
-        this._times = new ArrayList<>();
-        this._values = new ArrayList<>();
-        this._sensorAmount = 0;
+        this.sensors = new Hashtable<>();
+        this.times = new ArrayList<>();
+        this.values = new ArrayList<>();
+        this.sensorAmount = 0;
     }
 
-    public int AddSensor(String sensorName, long[] sensorTimes, double[] sensorValues)
+    public void AddSensor(String sensorName, long[] sensorTimes, double[] sensorValues)
     {
-        if(_sensors.containsKey(sensorName)) throw new NullPointerException("invalid sensor name");
+        if(sensors.containsKey(sensorName)) throw new NullPointerException("invalid sensor name");
 
         int id = 0;
-        if(_sensorAmount > 0)
-            id = _sensorAmount - 1;
+        if(sensorAmount > 0)
+            id = sensorAmount - 1;
 
-        _sensors.put(sensorName, id);
-        _times.add(id, sensorTimes);
-        _values.add(id, sensorValues);
+        sensors.put(sensorName, id);
+        times.add(id, sensorTimes);
+        values.add(id, sensorValues);
 
-        _sensorAmount++;
-
-        return id;
+        sensorAmount++;
     }
 
     public void RemoveSensor(String sensorName)
     {
-        if(!_sensors.containsKey(sensorName)) throw new NullPointerException("invalid sensor name");
+        if(!sensors.containsKey(sensorName)) throw new NullPointerException("invalid sensor name");
 
-        int id = _sensors.get(sensorName);
-        _sensors.remove(sensorName);
-        _times.remove(id);
-        _values.remove(id);
-        _sensorAmount--;
+        int id = sensors.get(sensorName);
+        sensors.remove(sensorName);
+        times.remove(id);
+        values.remove(id);
+        sensorAmount--;
     }
 
     public double[] CalculateSensorValuesByTime(String sensorName, long timeInterval)
     {
-        if(!_sensors.containsKey(sensorName)) throw new NullPointerException("invalid sensor name");
+        if(!sensors.containsKey(sensorName)) throw new NullPointerException("invalid sensor name");
         if(timeInterval == 0) throw new NullPointerException("time interval can not be 0");
 
         List<Double> valuesByTime = new ArrayList<>();
 
-        int id = _sensors.get(sensorName);
-        long[] times = _times.get(id);
-        double[] values = _values.get(id);
+        int id = sensors.get(sensorName);
+        long[] times = this.times.get(id);
+        double[] values = this.values.get(id);
 
         long curTime = timeInterval;
         int i = 1;

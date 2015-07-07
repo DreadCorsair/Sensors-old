@@ -1,3 +1,5 @@
+package main;
+
 import java.util.*;
 
 public class SensorHandler
@@ -10,7 +12,7 @@ public class SensorHandler
     private int shortestArrayLen;
     private int sensorAmount;
 
-    SensorHandler()
+    public SensorHandler()
     {
         Clear();
     }
@@ -27,24 +29,19 @@ public class SensorHandler
 
     public double[] GetAverageFromMatrix(double[][] matrix)
     {
-        double[] average = new double[shortestArrayLen];
+        int rows = matrix.length;
+        int columns = matrix[0].length;
 
-        for(int e = 0; e < shortestArrayLen; e++)
+        double[] average = new double[columns];
+
+        for(int e = 0; e < columns; e++)
         {
-            double min = Double.MAX_VALUE;
-            double max = Double.MIN_VALUE;
-            for(int s = 0; s < sensorAmount; s++)
+            double total = 0.0;
+            for(int s = 0; s < rows; s++)
             {
-                if(matrix[s][e] < min)
-                {
-                    min = matrix[s][e];
-                }
-                else if(matrix[s][e] > max)
-                {
-                    max = matrix[s][e];
-                }
+                total += matrix[s][e];
             }
-            average[e] = (min + max) / sensorAmount;
+            average[e] = total / rows;
         }
 
         return average;

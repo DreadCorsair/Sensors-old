@@ -21,9 +21,9 @@ public class Project
         //считаем значения для "sensor1" на каждые 4мс
         sh.CalculateSensorValuesByTime("sensor1", 4);
         sh.CalculateSensorValuesByTime("sensor2", 4);
-        double[][] matrix = sh.PackSensorsToMatrix();
-        double[][] scaleMatrix = sh.ScaleMatrix();
-        double[] average = sh.GetAverageFromMatrix(scaleMatrix);
+//        double[][] matrix = sh.PackSensorsToMatrix();
+//        double[][] scaleMatrix = sh.ScaleMatrix();
+        //double[] average = sh.GetAverageFromMatrix(scaleMatrix);
 
         System.out.println();
 

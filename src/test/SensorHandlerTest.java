@@ -5,6 +5,9 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.Assert.*;
 
 public class SensorHandlerTest {
@@ -44,12 +47,14 @@ public class SensorHandlerTest {
     }
 
     @Test
-    public void testScaleMatrix() throws Exception {
+    public void testScaleMatrix() throws Exception
+    {
 
     }
 
     @Test
-    public void testPackSensorsToMatrix() throws Exception {
+    public void testPackSensorsToMatrix() throws Exception
+    {
 
     }
 
@@ -66,5 +71,20 @@ public class SensorHandlerTest {
     @Test
     public void testCalculateSensorValuesByTime() throws Exception {
 
+    }
+
+    @Test
+    public void testGetShortestArrayLen() throws Exception
+    {
+        SensorHandler sh = new SensorHandler();
+        List<double[]> arrays = new ArrayList<>();
+        arrays.add(new double[] {1.0, 2.0, 3.0, 4.0, 5.0});
+        arrays.add(new double[] {1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0});
+        arrays.add(new double[] {1.0, 2.0, 3.0, 4.0});
+
+        int expected = 4;
+        int result = sh.GetShortestArrayLen(arrays);
+
+        assertEquals("", expected, result);
     }
 }

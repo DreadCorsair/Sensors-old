@@ -8,8 +8,6 @@ public class SensorHandler
     private List<long[]> times;
     private List<double[]> values;
     private List<double[]> dump;
-    private double[][] matrix;
-    private int shortestArrayLen;
     private int sensorAmount;
 
     public SensorHandler()
@@ -23,7 +21,6 @@ public class SensorHandler
         this.times = new ArrayList<>();
         this.values = new ArrayList<>();
         this.dump = new ArrayList<>();
-        this.shortestArrayLen = Integer.MAX_VALUE;
         this.sensorAmount = 0;
     }
 
@@ -47,11 +44,14 @@ public class SensorHandler
         return average;
     }
 
-    public double[][] ScaleMatrix()
+    public double[][] ScaleMatrix(double[][] matrix)
     {
-        double[][] scaleMatrix = new double[sensorAmount][shortestArrayLen];
+        int rows = matrix.length;
+        int columns = matrix[0].length;
 
-        for(int s = 0; s < sensorAmount; s++)
+        double[][] scaleMatrix = new double[rows][columns];
+
+        for(int s = 0; s < rows; s++)
         {
             double minValue = GetMinValue(matrix[s]);
             double maxValue = GetMaxValue(matrix[s]);
@@ -59,7 +59,7 @@ public class SensorHandler
             double alpha = 100.0 / (maxValue - minValue);
             double beta = alpha * minValue;
 
-            for(int e = 0; e < shortestArrayLen; e++)
+            for(int e = 0; e < columns; e++)
             {
                 scaleMatrix[s][e] = alpha * matrix[s][e] - beta;
             }
@@ -68,8 +68,12 @@ public class SensorHandler
         return scaleMatrix;
     }
 
-    public double[][] PackSensorsToMatrix()
+    public double[][] PackSensorsToMatrix(List<double[]> dump)
     {
+        int shortestArrayLen = GetShortestArrayLen(dump);
+        int rows = dump.size();
+        int columns = shortestArrayLen;
+
         double[][] matrix = new double[sensorAmount][shortestArrayLen];
 
         for(int s = 0; s < sensorAmount; s++)
@@ -80,7 +84,6 @@ public class SensorHandler
             }
         }
 
-        this.matrix = matrix;
         return matrix;
     }
 
@@ -144,10 +147,6 @@ public class SensorHandler
         }
 
         double[] valuesByTimeAr = ListToArray(valuesByTime);
-        if(valuesByTimeAr.length < shortestArrayLen)
-        {
-            shortestArrayLen = valuesByTimeAr.length;
-        }
 
         dump.add(valuesByTimeAr);
         return valuesByTimeAr;
@@ -195,5 +194,19 @@ public class SensorHandler
         }
 
         return max;
+    }
+
+    public int GetShortestArrayLen(List<double[]> dump)
+    {
+        int shortestArrayLen = Integer.MAX_VALUE;
+        for(int d = 0; d < dump.size(); d++)
+        {
+            if(dump.get(d).length < shortestArrayLen)
+            {
+                shortestArrayLen = dump.get(d).length;
+            }
+        }
+
+        return shortestArrayLen;
     }
 }

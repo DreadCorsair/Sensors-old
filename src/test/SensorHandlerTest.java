@@ -68,8 +68,18 @@ public class SensorHandlerTest {
     }
 
     @Test
-    public void testCalculateSensorValuesByTime() throws Exception {
+    public void testCalculateSensorValuesByTime() throws Exception
+    {
+        SensorHandler sh = new SensorHandler();
 
+        long[] sensorTimes = new long[] {5L, 10L, 15L, 20L, 40L, 45L};
+        double[] sensorValues = new double[] {100.0, 200.0, 300.0, 400.0, 500.0, 600.0};
+        sh.AddSensor("sensor1", sensorTimes, sensorValues);
+
+        double[] expected = new double[] {200.0, 400.0, 450.0, 500.0};
+        double[] result = sh.CalculateSensorValuesByTime("sensor1", 10L);
+
+        assertArrayEquals(expected, result, 0.0001);
     }
 
     @Test
@@ -95,6 +105,7 @@ public class SensorHandlerTest {
 
         double[] expected = new double[] {342.342, 893.893, 239.239};
         double[] result = sh.ListToArray(testList);
+
         assertArrayEquals(expected, result, 0.0001);
     }
 
@@ -107,6 +118,7 @@ public class SensorHandlerTest {
 
         double expected = 215.215;
         double result = sh.GetMinValue(testAr);
+
         assertEquals(expected, result, 0.0001);
     }
 
@@ -119,6 +131,7 @@ public class SensorHandlerTest {
 
         double expected = 832.832;
         double result = sh.GetMaxValue(testAr);
+
         assertEquals(expected, result, 0.0001);
     }
 
@@ -134,6 +147,7 @@ public class SensorHandlerTest {
 
         int expected = 4;
         int result = sh.GetShortestArrayLen(testList);
+
         assertEquals(expected, result);
     }
 }

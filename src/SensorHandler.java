@@ -1,6 +1,4 @@
-import java.util.ArrayList;
-import java.util.Hashtable;
-import java.util.List;
+import java.util.*;
 
 public class SensorHandler
 {
@@ -8,7 +6,8 @@ public class SensorHandler
     private List<long[]> times;
     private List<double[]> values;
     private List<double[]> dump;
-    private int shortestArray;
+    private double[][] matrix;
+    private int shortestArrayLen;
     private int sensorAmount;
 
     SensorHandler()
@@ -22,22 +21,44 @@ public class SensorHandler
         this.times = new ArrayList<>();
         this.values = new ArrayList<>();
         this.dump = new ArrayList<>();
-        this.shortestArray = Integer.MAX_VALUE;
+        this.shortestArrayLen = Integer.MAX_VALUE;
         this.sensorAmount = 0;
+    }
+
+    public double[][] ScaleMatrix()
+    {
+        double[][] scaleMatrix = new double[sensorAmount][shortestArrayLen];
+
+        for(int s = 0; s < sensorAmount; s++)
+        {
+            double minValue = GetMinValue(matrix[s]);
+            double maxValue = GetMaxValue(matrix[s]);
+
+            double alpha = 100.0 / (maxValue - minValue);
+            double beta = alpha * minValue;
+
+            for(int e = 0; e < shortestArrayLen; e++)
+            {
+                scaleMatrix[s][e] = alpha * matrix[s][e] - beta;
+            }
+        }
+
+        return scaleMatrix;
     }
 
     public double[][] PackSensorsToMatrix()
     {
-        double[][] matrix = new double[sensorAmount][shortestArray];
+        double[][] matrix = new double[sensorAmount][shortestArrayLen];
 
         for(int s = 0; s < sensorAmount; s++)
         {
-            for(int e = 0; e < shortestArray; e++)
+            for(int e = 0; e < shortestArrayLen; e++)
             {
                 matrix[s][e] = dump.get(s)[e];
             }
         }
 
+        this.matrix = matrix;
         return matrix;
     }
 
@@ -101,9 +122,9 @@ public class SensorHandler
         }
 
         double[] valuesByTimeAr = ListToArray(valuesByTime);
-        if(valuesByTimeAr.length < shortestArray)
+        if(valuesByTimeAr.length < shortestArrayLen)
         {
-            shortestArray = valuesByTimeAr.length;
+            shortestArrayLen = valuesByTimeAr.length;
         }
 
         dump.add(valuesByTimeAr);
@@ -124,5 +145,33 @@ public class SensorHandler
         }
 
         return array;
+    }
+
+    private double GetMinValue(double[] ar)
+    {
+        double min = Double.MAX_VALUE;
+        for(int i = 0; i < ar.length; i++)
+        {
+            if(ar[i] < min)
+            {
+                min = ar[i];
+            }
+        }
+
+        return min;
+    }
+
+    private double GetMaxValue(double[] ar)
+    {
+        double max = Double.MIN_VALUE;
+        for(int i = 0; i < ar.length; i++)
+        {
+            if(ar[i] > max)
+            {
+                max = ar[i];
+            }
+        }
+
+        return max;
     }
 }

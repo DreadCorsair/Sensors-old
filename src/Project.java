@@ -19,7 +19,8 @@ public class Project
         //считаем значения для "sensor1" на каждые 4мс
         sh.CalculateSensorValuesByTime("sensor1", 4);
         sh.CalculateSensorValuesByTime("sensor2", 4);
-        double[][] result = sh.PackSensorsToMatrix();
+        double[][] matrix = sh.PackSensorsToMatrix();
+        double[][] scaleMatrix = sh.ScaleMatrix();
 
         System.out.println();
 

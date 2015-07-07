@@ -42,7 +42,6 @@ public class SensorHandlerTest {
 
         double[] expected = new double[] {5.73, 6.54, 3.26};
         double[] result = sh.GetAverageFromMatrix(matrix);
-
         assertArrayEquals(expected, result, 0.01);
     }
 
@@ -74,9 +73,21 @@ public class SensorHandlerTest {
     }
 
     @Test
+    public void testGetValueByTime()
+    {
+        SensorHandler sh = new SensorHandler();
+
+        double expected = 2.775;
+        double result = sh.GetValueByTime(4.44, 2.22, 6.66, 2.22, 3.33);
+
+        assertEquals(expected, result, 0.0001);
+    }
+
+    @Test
     public void testListToArray()
     {
         SensorHandler sh = new SensorHandler();
+
         List<Double> testList = new ArrayList<>();
         testList.add(342.342);
         testList.add(893.893);
@@ -84,7 +95,6 @@ public class SensorHandlerTest {
 
         double[] expected = new double[] {342.342, 893.893, 239.239};
         double[] result = sh.ListToArray(testList);
-
         assertArrayEquals(expected, result, 0.0001);
     }
 
@@ -92,11 +102,11 @@ public class SensorHandlerTest {
     public void testGetMinValue() throws Exception
     {
         SensorHandler sh = new SensorHandler();
+
         double[] testAr = new double[] {215.215, 809.809, 362.362, 746.746, 832.832, 477.477};
 
         double expected = 215.215;
         double result = sh.GetMinValue(testAr);
-
         assertEquals(expected, result, 0.0001);
     }
 
@@ -104,11 +114,11 @@ public class SensorHandlerTest {
     public void testGetMaxValue() throws Exception
     {
         SensorHandler sh = new SensorHandler();
+
         double[] testAr = new double[] {215.215, 809.809, 362.362, 746.746, 832.832, 477.477};
 
         double expected = 832.832;
         double result = sh.GetMaxValue(testAr);
-
         assertEquals(expected, result, 0.0001);
     }
 
@@ -116,6 +126,7 @@ public class SensorHandlerTest {
     public void testGetShortestArrayLen() throws Exception
     {
         SensorHandler sh = new SensorHandler();
+
         List<double[]> testList = new ArrayList<>();
         testList.add(new double[]{1.0, 2.0, 3.0, 4.0, 5.0});
         testList.add(new double[]{1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0});
@@ -123,7 +134,6 @@ public class SensorHandlerTest {
 
         int expected = 4;
         int result = sh.GetShortestArrayLen(testList);
-
         assertEquals(expected, result);
     }
 }

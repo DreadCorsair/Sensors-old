@@ -152,7 +152,7 @@ public class SensorHandler
         return valuesByTimeAr;
     }
 
-    private double GetValueByTime(double time, double timeMin, double timeMax, double valueMin, double valueMax)
+    public double GetValueByTime(double time, double timeMin, double timeMax, double valueMin, double valueMax)
     {
         return (time - timeMin) / (timeMax - timeMin) * (valueMax - valueMin) + valueMin;
     }

@@ -21,6 +21,7 @@ public class Project
         sh.CalculateSensorValuesByTime("sensor2", 4);
         double[][] matrix = sh.PackSensorsToMatrix();
         double[][] scaleMatrix = sh.ScaleMatrix();
+        double[] average = sh.GetAverageFromMatrix(scaleMatrix);
 
         System.out.println();
 

@@ -25,6 +25,31 @@ public class SensorHandler
         this.sensorAmount = 0;
     }
 
+    public double[] GetAverageFromMatrix(double[][] matrix)
+    {
+        double[] average = new double[shortestArrayLen];
+
+        for(int e = 0; e < shortestArrayLen; e++)
+        {
+            double min = Double.MAX_VALUE;
+            double max = Double.MIN_VALUE;
+            for(int s = 0; s < sensorAmount; s++)
+            {
+                if(matrix[s][e] < min)
+                {
+                    min = matrix[s][e];
+                }
+                else if(matrix[s][e] > max)
+                {
+                    max = matrix[s][e];
+                }
+            }
+            average[e] = (min + max) / sensorAmount;
+        }
+
+        return average;
+    }
+
     public double[][] ScaleMatrix()
     {
         double[][] scaleMatrix = new double[sensorAmount][shortestArrayLen];

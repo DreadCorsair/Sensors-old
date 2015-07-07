@@ -70,15 +70,14 @@ public class SensorHandler
 
     public double[][] PackSensorsToMatrix(List<double[]> dump)
     {
-        int shortestArrayLen = GetShortestArrayLen(dump);
         int rows = dump.size();
-        int columns = shortestArrayLen;
+        int columns = GetShortestArrayLen(dump);
 
-        double[][] matrix = new double[sensorAmount][shortestArrayLen];
+        double[][] matrix = new double[rows][columns];
 
-        for(int s = 0; s < sensorAmount; s++)
+        for(int s = 0; s < rows; s++)
         {
-            for(int e = 0; e < shortestArrayLen; e++)
+            for(int e = 0; e < columns; e++)
             {
                 matrix[s][e] = dump.get(s)[e];
             }

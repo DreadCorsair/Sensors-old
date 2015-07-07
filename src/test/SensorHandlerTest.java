@@ -54,7 +54,24 @@ public class SensorHandlerTest {
     @Test
     public void testPackSensorsToMatrix() throws Exception
     {
+        SensorHandler sh = new SensorHandler();
 
+        List<double[]> sensors = new ArrayList<>();
+        sensors.add(new double[] {1.0, 2.0, 3.0});
+        sensors.add(new double[] {4.0, 5.0, 6.0});
+        sensors.add(new double[] {7.0, 8.0, 9.0});
+
+        double[][] expected = new double[][]
+                {
+                        {1.0, 2.0, 3.0},
+                        {4.0, 5.0, 6.0},
+                        {7.0, 8.0, 9.0}
+                };
+        double[][] result = sh.PackSensorsToMatrix(sensors);
+
+        assertArrayEquals(expected[0], result[0], 0.0001);
+        assertArrayEquals(expected[1], result[1], 0.0001);
+        assertArrayEquals(expected[2], result[2], 0.0001);
     }
 
     @Test

@@ -157,7 +157,7 @@ public class SensorHandler
         return (time - timeMin) / (timeMax - timeMin) * (valueMax - valueMin) + valueMin;
     }
 
-    private double[] ListToArray(List<Double> list)
+    public double[] ListToArray(List<Double> list)
     {
         double[] array = new double[list.size()];
         for(int i = 0; i < array.length; i++)

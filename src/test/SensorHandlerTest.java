@@ -74,6 +74,21 @@ public class SensorHandlerTest {
     }
 
     @Test
+    public void testListToArray()
+    {
+        SensorHandler sh = new SensorHandler();
+        List<Double> testList = new ArrayList<>();
+        testList.add(342.342);
+        testList.add(893.893);
+        testList.add(239.239);
+
+        double[] expected = new double[] {342.342, 893.893, 239.239};
+        double[] result = sh.ListToArray(testList);
+
+        assertArrayEquals(expected, result, 0.0001);
+    }
+
+    @Test
     public void testGetMinValue() throws Exception
     {
         SensorHandler sh = new SensorHandler();

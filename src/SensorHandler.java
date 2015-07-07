@@ -7,6 +7,8 @@ public class SensorHandler
     private Hashtable<String,Integer> sensors;
     private List<long[]> times;
     private List<double[]> values;
+    private List<double[]> dump;
+    private int shortestArray;
     private int sensorAmount;
 
     SensorHandler()
@@ -19,16 +21,31 @@ public class SensorHandler
         this.sensors = new Hashtable<>();
         this.times = new ArrayList<>();
         this.values = new ArrayList<>();
+        this.dump = new ArrayList<>();
+        this.shortestArray = Integer.MAX_VALUE;
         this.sensorAmount = 0;
+    }
+
+    public double[][] PackSensorsToMatrix()
+    {
+        double[][] matrix = new double[sensorAmount][shortestArray];
+
+        for(int s = 0; s < sensorAmount; s++)
+        {
+            for(int e = 0; e < shortestArray; e++)
+            {
+                matrix[s][e] = dump.get(s)[e];
+            }
+        }
+
+        return matrix;
     }
 
     public void AddSensor(String sensorName, long[] sensorTimes, double[] sensorValues)
     {
         if(sensors.containsKey(sensorName)) throw new NullPointerException("invalid sensor name");
 
-        int id = 0;
-        if(sensorAmount > 0)
-            id = sensorAmount - 1;
+        int id = sensorAmount;
 
         sensors.put(sensorName, id);
         times.add(id, sensorTimes);
@@ -45,6 +62,7 @@ public class SensorHandler
         sensors.remove(sensorName);
         times.remove(id);
         values.remove(id);
+
         sensorAmount--;
     }
 
@@ -66,7 +84,14 @@ public class SensorHandler
             if(times[i] >= curTime)
             {
                 double curValue = GetValueByTime(curTime, times[i - 1], times[i], values[i - 1], values[i]);
-                valuesByTime.add(curValue);
+                if(curValue < 0)
+                {
+                    valuesByTime.add(0.0);
+                }
+                else
+                {
+                    valuesByTime.add(curValue);
+                }
                 curTime += timeInterval;
             }
             else
@@ -75,7 +100,14 @@ public class SensorHandler
             }
         }
 
-        return ListToArray(valuesByTime);
+        double[] valuesByTimeAr = ListToArray(valuesByTime);
+        if(valuesByTimeAr.length < shortestArray)
+        {
+            shortestArray = valuesByTimeAr.length;
+        }
+
+        dump.add(valuesByTimeAr);
+        return valuesByTimeAr;
     }
 
     private double GetValueByTime(double time, double timeMin, double timeMax, double valueMin, double valueMax)

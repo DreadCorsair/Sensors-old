@@ -168,7 +168,7 @@ public class SensorHandler
         return array;
     }
 
-    private double GetMinValue(double[] ar)
+    public double GetMinValue(double[] ar)
     {
         double min = Double.MAX_VALUE;
         for(int i = 0; i < ar.length; i++)
@@ -182,7 +182,7 @@ public class SensorHandler
         return min;
     }
 
-    private double GetMaxValue(double[] ar)
+    public double GetMaxValue(double[] ar)
     {
         double max = Double.MIN_VALUE;
         for(int i = 0; i < ar.length; i++)

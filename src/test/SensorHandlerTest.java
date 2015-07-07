@@ -48,7 +48,26 @@ public class SensorHandlerTest {
     @Test
     public void testScaleMatrix() throws Exception
     {
+        SensorHandler sh = new SensorHandler();
 
+        double[][] matrix = new double[][]
+                {
+                        {1.0, 8.0, 9.0},
+                        {4.0, 5.0, 6.0},
+                        {7.0, 8.0, 3.0}
+                };
+
+        double[][] expected = new double[][]
+                {
+                        {0.0, 87.5, 100.0},
+                        {0.0, 50.0, 100.0},
+                        {80.0, 100.0, 0.0},
+                };
+        double[][] result = sh.ScaleMatrix(matrix);
+
+        assertArrayEquals(expected[0], result[0], 0.0001);
+        assertArrayEquals(expected[1], result[1], 0.0001);
+        assertArrayEquals(expected[2], result[2], 0.0001);
     }
 
     @Test

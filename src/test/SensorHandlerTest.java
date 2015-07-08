@@ -18,6 +18,19 @@ public class SensorHandlerTest
         assert true;
     }
 
+    @Test
+    public void testAddToArray() throws Exception
+    {
+        SensorHandler sh = new SensorHandler();
+
+        double[] ar = new double[] {-3.0, -2.0 , 0.0, 1.0, 2.0, 3.0};
+
+        double[] expected = new double[] {-13.0, -12.0 , -10.0, -9.0, -8.0, -7.0};
+        double[] result = sh.AddToArray(ar, -10);
+
+        assertArrayEquals(expected, result, 0.0001);
+    }
+
 //    @Test
 //    public void testPackSensorsToMatrix() throws Exception
 //    {

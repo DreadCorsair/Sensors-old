@@ -28,6 +28,16 @@ public class SensorHandler
         Clear();
     }
 
+    public double[] AddToArray(double[] ar, double value)
+    {
+        double[] result = ar.clone();
+        for(int i = 0; i < result.length; i++)
+        {
+            result[i] += value;
+        }
+        return result;
+    }
+
     private double[][] PackSensorsToMatrix(List<double[]> dump)
     {
         int rows = dump.size();

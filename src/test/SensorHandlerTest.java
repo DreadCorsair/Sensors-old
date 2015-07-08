@@ -18,19 +18,6 @@ public class SensorHandlerTest
         assert true;
     }
 
-    @Test
-    public void testAddToArray() throws Exception
-    {
-        SensorHandler sh = new SensorHandler();
-
-        double[] ar = new double[] {-3.0, -2.0 , 0.0, 1.0, 2.0, 3.0};
-
-        double[] expected = new double[] {-13.0, -12.0 , -10.0, -9.0, -8.0, -7.0};
-        double[] result = sh.AddToArray(ar, -10);
-
-        assertArrayEquals(expected, result, 0.0001);
-    }
-
 //    @Test
 //    public void testPackSensorsToMatrix() throws Exception
 //    {
@@ -185,4 +172,44 @@ public class SensorHandlerTest
 //        double[] result = sh.GetAverageFromMatrix(matrix);
 //        assertArrayEquals(expected, result, 0.01);
 //    }
+
+    @Test
+    public void testAddToArray() throws Exception
+    {
+        SensorHandler sh = new SensorHandler();
+
+        double[] ar = new double[] {-3.0, -2.0 , 0.0, 1.0, 2.0, 3.0};
+
+        double[] expected = new double[] {-13.0, -12.0 , -10.0, -9.0, -8.0, -7.0};
+        double[] result = sh.AddToArray(ar, -10);
+
+        assertArrayEquals(expected, result, 0.0001);
+    }
+
+    @Test
+    public void testBinMatrix() throws Exception
+    {
+        SensorHandler sh = new SensorHandler();
+
+        double[][] matrix = new double[][]
+                {
+                        {5, 10, -10, 100, -100},
+                        {-200, 200, -20, 20, 10},
+                        {15, 30, -30, 300, -300}
+                };
+        double[] upLimit = new double[]{10.0, 20.0, 30.0};
+        double[] downLimit = new double[]{-10.0, -20.0, -30.0};
+
+        int[][] expected = new int[][]
+                {
+                        {1, 1, 1, 0, 0},
+                        {0, 0, 1, 1, 1},
+                        {1, 1, 1, 0, 0},
+                };
+        int[][] result = sh.BinMatrix(matrix, upLimit, downLimit);
+
+        assertArrayEquals(expected[0], result[0]);
+        assertArrayEquals(expected[1], result[1]);
+        assertArrayEquals(expected[2], result[2]);
+    }
 }

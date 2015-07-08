@@ -23,19 +23,12 @@ public class SensorHandler
     {
         double[][] matrix = PackSensorsToMatrix(CalculateAllValuesByTime(timeInterval));
         double[][] scaleMatrix = ScaleMatrix(matrix);
-        GetAverageFromMatrix(scaleMatrix);
+        double[] average = GetAverageFromMatrix(scaleMatrix);
+        double[] upLimit = AddToArray(average, 20);
+        double[] downLimit = AddToArray(average, -20);
+        int[][] binMatrix = BinMatrix(scaleMatrix, upLimit, downLimit);
 
         Clear();
-    }
-
-    public double[] AddToArray(double[] ar, double value)
-    {
-        double[] result = ar.clone();
-        for(int i = 0; i < result.length; i++)
-        {
-            result[i] += value;
-        }
-        return result;
     }
 
     private double[][] PackSensorsToMatrix(List<double[]> dump)
@@ -200,6 +193,40 @@ public class SensorHandler
         }
 
         return average;
+    }
+
+    public double[] AddToArray(double[] ar, double value)
+    {
+        double[] result = ar.clone();
+        for(int i = 0; i < result.length; i++)
+        {
+            result[i] += value;
+        }
+        return result;
+    }
+
+    public int[][] BinMatrix(double[][] scaleMatrix, double[] upLimit, double[] downLimit)
+    {
+        int rows = scaleMatrix.length;
+        int columns = scaleMatrix[0].length;
+        int[][] binMatrix = new int[rows][columns];
+
+        for(int r = 0; r < rows; r++)
+        {
+            double up = upLimit[r];
+            double down = downLimit[r];
+
+            for(int c = 0; c < columns; c++)
+            {
+                double value = scaleMatrix[r][c];
+                if(value <= up && value >= down)
+                {
+                    binMatrix[r][c] = 1;
+                }
+            }
+        }
+
+        return binMatrix;
     }
 
     private void Clear()

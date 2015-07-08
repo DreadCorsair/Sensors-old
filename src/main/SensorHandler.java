@@ -23,10 +23,11 @@ public class SensorHandler
     {
         double[][] matrix = PackSensorsToMatrix(CalculateAllValuesByTime(timeInterval));
         double[][] scaleMatrix = ScaleMatrix(matrix);
-        double[] average = GetAverageFromMatrix(scaleMatrix);
-        double[] upLimit = AddToArray(average, 20);
-        double[] downLimit = AddToArray(average, -20);
+        double[] scaleMatrixAverage = GetAverageFromMatrix(scaleMatrix);
+        double[] upLimit = AddToArray(scaleMatrixAverage, 20);
+        double[] downLimit = AddToArray(scaleMatrixAverage, -20);
         int[][] binMatrix = BinMatrix(scaleMatrix, upLimit, downLimit);
+        double[] binMatrixAverage = GetAverageFromMatrix(binMatrix);
 
         Clear();
     }
@@ -175,21 +176,41 @@ public class SensorHandler
         return max;
     }
 
-    private double[] GetAverageFromMatrix(double[][] matrix)
+    public double[] GetAverageFromMatrix(double[][] matrix)
     {
         int rows = matrix.length;
         int columns = matrix[0].length;
 
         double[] average = new double[columns];
 
-        for(int e = 0; e < columns; e++)
+        for(int r = 0; r < rows; r++)
         {
             double total = 0.0;
-            for(int s = 0; s < rows; s++)
+            for(int c = 0; c < columns; c++)
             {
-                total += matrix[s][e];
+                total += matrix[r][c];
             }
-            average[e] = total / rows;
+            average[r] = total / columns;
+        }
+
+        return average;
+    }
+
+    public double[] GetAverageFromMatrix(int[][] matrix)
+    {
+        int rows = matrix.length;
+        int columns = matrix[0].length;
+
+        double[] average = new double[columns];
+
+        for(int r = 0; r < rows; r++)
+        {
+            double total = 0.0;
+            for(int c = 0; c < columns; c++)
+            {
+                total += matrix[r][c];
+            }
+            average[r] = total / columns;
         }
 
         return average;

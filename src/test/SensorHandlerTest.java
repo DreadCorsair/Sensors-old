@@ -156,22 +156,34 @@ public class SensorHandlerTest
 //        assertEquals(expected, result, 0.0001);
 //    }
 //
-//    @Test
-//    public void testGetAverageFromMatrix() throws Exception
-//    {
-//        SensorHandler sh = new SensorHandler();
-//
-//        double[][] matrix = new double[][]
-//                {
-//                        {8.73, 7.77, 1.63},
-//                        {3.18, 8.67, 1.36},
-//                        {5.30, 3.18, 6.79}
-//                };
-//
-//        double[] expected = new double[] {5.73, 6.54, 3.26};
-//        double[] result = sh.GetAverageFromMatrix(matrix);
-//        assertArrayEquals(expected, result, 0.01);
-//    }
+    @Test
+    public void testGetAverageFromMatrix() throws Exception
+    {
+        SensorHandler sh = new SensorHandler();
+
+        double[][] matrixD = new double[][]
+                {
+                        {8.73, 7.77, 1.63},
+                        {3.18, 8.67, 1.36},
+                        {5.30, 3.18, 6.79}
+                };
+
+        double[] expected = new double[] {6.04, 4.40, 5.09};
+        double[] result = sh.GetAverageFromMatrix(matrixD);
+
+        assertArrayEquals(expected, result, 0.01);
+
+        int[][] matrixInt = new int[][]
+                {
+                        {8, 7, 1},
+                        {3, 8, 1},
+                        {5, 3, 6}
+                };
+        expected = new double[] {5.33, 4.0, 4.66};
+        result = sh.GetAverageFromMatrix(matrixInt);
+
+        assertArrayEquals(expected, result, 0.01);
+    }
 
     @Test
     public void testAddToArray() throws Exception

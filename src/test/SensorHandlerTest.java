@@ -13,11 +13,11 @@ import static org.junit.Assert.*;
 public class SensorHandlerTest
 {
     @Test
-    public void testStart() throws Exception
+    public void testGetReferenceVector() throws Exception
     {
         assert true;
     }
-
+//
 //    @Test
 //    public void testPackSensorsToMatrix() throws Exception
 //    {
@@ -156,72 +156,72 @@ public class SensorHandlerTest
 //        assertEquals(expected, result, 0.0001);
 //    }
 //
-    @Test
-    public void testGetAverageFromMatrix() throws Exception
-    {
-        SensorHandler sh = new SensorHandler();
-
-        double[][] matrixD = new double[][]
-                {
-                        {8.73, 7.77, 1.63},
-                        {3.18, 8.67, 1.36},
-                        {5.30, 3.18, 6.79}
-                };
-
-        double[] expected = new double[] {6.04, 4.40, 5.09};
-        double[] result = sh.GetAverageFromMatrix(matrixD);
-
-        assertArrayEquals(expected, result, 0.01);
-
-        int[][] matrixInt = new int[][]
-                {
-                        {8, 7, 1},
-                        {3, 8, 1},
-                        {5, 3, 6}
-                };
-        expected = new double[] {5.33, 4.0, 4.66};
-        result = sh.GetAverageFromMatrix(matrixInt);
-
-        assertArrayEquals(expected, result, 0.01);
-    }
-
-    @Test
-    public void testAddToArray() throws Exception
-    {
-        SensorHandler sh = new SensorHandler();
-
-        double[] ar = new double[] {-3.0, -2.0 , 0.0, 1.0, 2.0, 3.0};
-
-        double[] expected = new double[] {-13.0, -12.0 , -10.0, -9.0, -8.0, -7.0};
-        double[] result = sh.AddToArray(ar, -10);
-
-        assertArrayEquals(expected, result, 0.0001);
-    }
-
-    @Test
-    public void testBinMatrix() throws Exception
-    {
-        SensorHandler sh = new SensorHandler();
-
-        double[][] matrix = new double[][]
-                {
-                        {5, 10, -10, 100, -100},
-                        {-200, 200, -20, 20, 10},
-                        {15, 30, -30, 300, -300}
-                };
-        double[] upLimit = new double[]{10.0, 20.0, 30.0};
-        double[] downLimit = new double[]{-10.0, -20.0, -30.0};
-
-        int[][] expected = new int[][]
-                {
-                        {1, 1, 1, 0, 0},
-                        {0, 0, 1, 1, 1},
-                        {1, 1, 1, 0, 0},
-                };
-        int[][] result = sh.BinMatrix(matrix, upLimit, downLimit);
-
-        assertArrayEquals(expected[0], result[0]);
-        assertArrayEquals(expected[1], result[1]);
-        assertArrayEquals(expected[2], result[2]);
-    }
+//    @Test
+//    public void testGetAverageFromMatrix() throws Exception
+//    {
+//        SensorHandler sh = new SensorHandler();
+//
+//        double[][] matrixD = new double[][]
+//                {
+//                        {8.73, 7.77, 1.63},
+//                        {3.18, 8.67, 1.36},
+//                        {5.30, 3.18, 6.79}
+//                };
+//
+//        double[] expected = new double[] {6.04, 4.40, 5.09};
+//        double[] result = sh.GetAverageFromMatrix(matrixD);
+//
+//        assertArrayEquals(expected, result, 0.01);
+//
+//        int[][] matrixInt = new int[][]
+//                {
+//                        {8, 7, 1},
+//                        {3, 8, 1},
+//                        {5, 3, 6}
+//                };
+//        expected = new double[] {5.33, 4.0, 4.66};
+//        result = sh.GetAverageFromMatrix(matrixInt);
+//
+//        assertArrayEquals(expected, result, 0.01);
+//    }
+//
+//    @Test
+//    public void testAddToArray() throws Exception
+//    {
+//        SensorHandler sh = new SensorHandler();
+//
+//        double[] ar = new double[] {-3.0, -2.0 , 0.0, 1.0, 2.0, 3.0};
+//
+//        double[] expected = new double[] {-13.0, -12.0 , -10.0, -9.0, -8.0, -7.0};
+//        double[] result = sh.AddToArray(ar, -10);
+//
+//        assertArrayEquals(expected, result, 0.0001);
+//    }
+//
+//    @Test
+//    public void testBinMatrix() throws Exception
+//    {
+//        SensorHandler sh = new SensorHandler();
+//
+//        double[][] matrix = new double[][]
+//                {
+//                        {5, 10, -10, 100, -100},
+//                        {-200, 200, -20, 20, 10},
+//                        {15, 30, -30, 300, -300}
+//                };
+//        double[] upLimit = new double[]{10.0, 20.0, 30.0};
+//        double[] downLimit = new double[]{-10.0, -20.0, -30.0};
+//
+//        int[][] expected = new int[][]
+//                {
+//                        {1, 1, 1, 0, 0},
+//                        {0, 0, 1, 1, 1},
+//                        {1, 1, 1, 0, 0},
+//                };
+//        int[][] result = sh.BinMatrix(matrix, upLimit, downLimit);
+//
+//        assertArrayEquals(expected[0], result[0]);
+//        assertArrayEquals(expected[1], result[1]);
+//        assertArrayEquals(expected[2], result[2]);
+//    }
 }

@@ -19,17 +19,32 @@ public class SensorHandler
         values.add(sensorValues);
     }
 
-    public void Start(long timeInterval)
+    public int[] GetReferenceVector(long timeInterval)
     {
         double[][] matrix = PackSensorsToMatrix(CalculateAllValuesByTime(timeInterval));
+
         double[][] scaleMatrix = ScaleMatrix(matrix);
+
         double[] scaleMatrixAverage = GetAverageFromMatrix(scaleMatrix);
         double[] upLimit = AddToArray(scaleMatrixAverage, 20);
         double[] downLimit = AddToArray(scaleMatrixAverage, -20);
         int[][] binMatrix = BinMatrix(scaleMatrix, upLimit, downLimit);
+
         double[] binMatrixAverage = GetAverageFromMatrix(binMatrix);
+        int[] referenceVector = new int[binMatrixAverage.length];
+
+        for(int i = 0; i < referenceVector.length; i++)
+        {
+            double value = binMatrixAverage[i];
+            if(value > 0.5)
+            {
+                referenceVector[i] = 1;
+            }
+        }
 
         Clear();
+
+        return referenceVector;
     }
 
     private double[][] PackSensorsToMatrix(List<double[]> dump)
@@ -176,12 +191,12 @@ public class SensorHandler
         return max;
     }
 
-    public double[] GetAverageFromMatrix(double[][] matrix)
+    private double[] GetAverageFromMatrix(double[][] matrix)
     {
         int rows = matrix.length;
         int columns = matrix[0].length;
 
-        double[] average = new double[columns];
+        double[] average = new double[rows];
 
         for(int r = 0; r < rows; r++)
         {
@@ -196,12 +211,12 @@ public class SensorHandler
         return average;
     }
 
-    public double[] GetAverageFromMatrix(int[][] matrix)
+    private double[] GetAverageFromMatrix(int[][] matrix)
     {
         int rows = matrix.length;
         int columns = matrix[0].length;
 
-        double[] average = new double[columns];
+        double[] average = new double[rows];
 
         for(int r = 0; r < rows; r++)
         {
@@ -216,7 +231,7 @@ public class SensorHandler
         return average;
     }
 
-    public double[] AddToArray(double[] ar, double value)
+    private double[] AddToArray(double[] ar, double value)
     {
         double[] result = ar.clone();
         for(int i = 0; i < result.length; i++)
@@ -226,7 +241,7 @@ public class SensorHandler
         return result;
     }
 
-    public int[][] BinMatrix(double[][] scaleMatrix, double[] upLimit, double[] downLimit)
+    private int[][] BinMatrix(double[][] scaleMatrix, double[] upLimit, double[] downLimit)
     {
         int rows = scaleMatrix.length;
         int columns = scaleMatrix[0].length;

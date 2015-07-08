@@ -8,13 +8,15 @@ public class Project
         double[] y1 = new double[] {5, 8, 9, 10, 12, 13, 15, 14, 48, 50, 70};
 
         long[] x2 = new long[] {7, 9, 13, 24, 32, 40, 45, 56, 100, 200};
-        double[] y2 = new double[] {14, 18, 19, 132, 153, 121, 145, 164, 177, 1100};
+        double[] y2 = new double[] {1114, 1118, 1119, 1132, 1153, 1121, 1145, 1164, 1177, 11100};
 
         SensorHandler sh = new SensorHandler();
 
         sh.AddSensor(x1, y1);
         sh.AddSensor(x2, y2);
 
-        sh.Start(10);
+        int[] result = sh.GetReferenceVector(10);
+
+        System.out.println();
     }
 }
